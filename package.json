@@ -26,14 +26,14 @@
     "gulp-shell": "^0.3.0"
   },
   "peerDependencies": {
-    "react": "^0.13.0 || ^0.14.0-a"
+    "react": "^0.13.0 || ^0.14.x"
   },
   "devDependencies": {
     "babel-jest": "^5.3.0",
     "jest-cli": "^0.8.2",
-    "react": "http://react.zpao.com/builds/master/latest/react.tgz",
+    "react": "^0.14.x",
     "react-addons-test-utils": "^0.14.5",
-    "react-dom": "http://react.zpao.com/builds/master/latest/react-dom.tgz"
+    "react-dom": "^0.14.x"
   },
   "scripts": {
     "prepublish": "gulp",

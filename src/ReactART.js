@@ -19,7 +19,6 @@ var Transform = require('art/core/transform');
 var Mode = require('art/modes/current');
 
 var React = require('react');
-var ReactDOM = require('react-dom');
 var ReactInstanceMap = require('react/lib/ReactInstanceMap');
 var ReactMultiChild = require('react/lib/ReactMultiChild');
 var ReactUpdates = require('react/lib/ReactUpdates');
@@ -168,9 +167,7 @@ var Surface = React.createClass({
   mixins: [ContainerMixin],
 
   componentDidMount: function() {
-    var domNode = ReactDOM.findDOMNode(this);
-
-    this.node = Mode.Surface(+this.props.width, +this.props.height, domNode);
+    this.node = Mode.Surface(+this.props.width, +this.props.height, this.domNode);
 
     var transaction = ReactUpdates.ReactReconcileTransaction.getPooled();
     transaction.perform(
@@ -220,6 +217,7 @@ var Surface = React.createClass({
     var Tag = Mode.Surface.tagName;
     return (
       <Tag
+        ref={c => this.domNode = c}
         accesskey={props.accesskey}
         className={props.className}
         draggable={props.draggable}
@@ -355,12 +353,7 @@ var NodeMixin = {
 
 var Group = createComponent('Group', NodeMixin, ContainerMixin, {
 
-  mountComponent: function(
-    transaction,
-    nativeParent,
-    nativeContainerInfo,
-    context
-  ) {
+  mountComponent: function(rootID, transaction, context) {
     this.node = Mode.Group();
     var props = this._currentElement.props;
     this.applyGroupProps(emptyObject, props);
@@ -393,12 +386,7 @@ var Group = createComponent('Group', NodeMixin, ContainerMixin, {
 var ClippingRectangle = createComponent(
     'ClippingRectangle', NodeMixin, ContainerMixin, {
 
-  mountComponent: function(
-    transaction,
-    nativeParent,
-    nativeContainerInfo,
-    context
-  ) {
+  mountComponent: function(rootID, transaction, context) {
     this.node = Mode.ClippingRectangle();
     var props = this._currentElement.props;
     this.applyClippingProps(emptyObject, props);
@@ -478,12 +466,7 @@ var Shape = createComponent('Shape', RenderableMixin, {
     this._oldPath = null;
   },
 
-  mountComponent: function(
-    transaction,
-    nativeParent,
-    nativeContainerInfo,
-    context
-  ) {
+  mountComponent: function(rootID, transaction, context) {
     this.node = Mode.Shape();
     var props = this._currentElement.props;
     this.applyShapeProps(emptyObject, props);
@@ -531,12 +514,7 @@ var Text = createComponent('Text', RenderableMixin, {
     this._oldString = null;
   },
 
-  mountComponent: function(
-    transaction,
-    nativeParent,
-    nativeContainerInfo,
-    context
-  ) {
+  mountComponent: function(rootID, transaction, context) {
     var props = this._currentElement.props;
     var newString = childrenAsString(props.children);
     this.node = Mode.Text(newString, props.font, props.alignment, props.path);
