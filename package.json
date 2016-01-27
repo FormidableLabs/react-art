@@ -18,7 +18,7 @@
     "url": "https://github.com/reactjs/react-art.git"
   },
   "dependencies": {
-    "art": "git+https://github.com/formidablelabs/art#6d86640",
+    "art": "git+https://github.com/formidablelabs/art#eb8d48a",
     "del": "^0.1.3",
     "fbjs": "^0.2.0",
     "gulp": "^3.8.10",
